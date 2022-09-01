@@ -74,11 +74,13 @@ class Chatbox {
             console.log(msg2)
           this.messages.push(msg2);
           this.updateChatText(chatbox)
+          this.updateChatBotText(chatbox)
           textField.value = ''
 
       }).catch((error) => {
           console.error('Error:', error);
           this.updateChatText(chatbox)
+          this.updateChatBotText(chatbox)
           textField.value = ''
         });
   }
@@ -87,8 +89,9 @@ class Chatbox {
       var html = '';
       this.messages.slice().reverse().forEach(function(item, index) {
           if (item.name === "Sam")
-          {
-              html += '<div class="messages__item messages__item--visitor">' + item.message + '</div>'
+          {   
+                // html += '<div class="messages__item messages__item--visitor">' + item.message + '</div>'
+                
           }
           else
           {
@@ -97,8 +100,30 @@ class Chatbox {
         });
 
       const chatmessage = chatbox.querySelector('.chatbox__messages');
+        
       chatmessage.innerHTML = html;
-  }
+    }
+
+  updateChatBotText(chatbox) {
+    setTimeout(() => {
+      var html = '';
+      this.messages.slice().reverse().forEach(function(item, index) {
+          if (item.name === "Sam")
+          {   
+                html += '<div class="messages__item messages__item--visitor">' + item.message + '</div>'
+                
+          }
+          else
+          {
+              html += '<div class="messages__item messages__item--operator">' + item.message + '</div>'
+          }
+        });
+
+      const chatmessage = chatbox.querySelector('.chatbox__messages');
+        
+      chatmessage.innerHTML = html;
+    }, 2000)
+    }
 }
 
 
