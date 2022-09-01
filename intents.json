@@ -80,6 +80,15 @@
         "What did the buffalo say when his son left for college? Bison.", 
         "What is the best thing about Switzerland? I dont know, but the flag is a big plus"
       ]
+    },
+    {
+      "tag": "support",
+      "patterns": [
+        "support"
+      ],
+      "responses": [
+        "check this link https://www.google.com/"
+      ]
     }
   ]
 }

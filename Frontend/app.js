@@ -46,7 +46,20 @@ class Chatbox {
       let msg1 = { name: "User", message: text1 }
       this.messages.push(msg1);
 
-      fetch('https://python-chat-bot.onrender.com/predict', {
+      function replaceURLs(message) {
+        if(!message) return;
+      
+        var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
+        return message.replace(urlRegex, function (url) {
+          var hyperlink = url;
+          if (!hyperlink.match('^https?:\/\/')) {
+            hyperlink = 'http://' + hyperlink;
+          }
+          return '<a href="' + hyperlink + '" target="_blank" rel="noopener noreferrer">' + url + '</a>'
+        });
+      }
+
+      fetch('http://127.0.0.1:5000/predict', {
           method: 'POST',
           body: JSON.stringify({ message: text1 }),
           mode: 'cors',
@@ -56,7 +69,9 @@ class Chatbox {
         })
         .then(r => r.json())
         .then(r => {
-          let msg2 = { name: "Sam", message: r.answer };
+            let msg2 = { name: "Sam", message: r.answer };
+            msg2.message = replaceURLs(msg2.message)
+            console.log(msg2)
           this.messages.push(msg2);
           this.updateChatText(chatbox)
           textField.value = ''
